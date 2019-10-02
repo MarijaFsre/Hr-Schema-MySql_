@@ -1,0 +1,103 @@
+<!--kljentski dio koju u formi trazi upis imena i prezimena te upotrebom jquera poslati te parametre na serversku stranu to jest employees.php na obradu -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="../style.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css" />
+
+<style>
+.header {
+  padding: 30px;
+  text-align: center;
+  background: rgb(173, 228, 230);
+  color: black;
+}
+
+.active {
+  background-color: rgb(100, 120, 235);
+  color: white;
+}
+
+#pretrazi
+{
+  background-color: rgb(100, 120, 235);
+}
+</style>
+</head>
+<body>
+
+    <div class="header">
+      <h1>Hr-schema-mysql database</h1>
+    </div>
+
+    <header>
+        <div class="topnav" id="myTopnav">
+            <a href="./index.html" class="active">jQuery Employees</a>
+            <a href="../wsdl/employees.html">Wsdl Employees</a>
+            <a href="../../MVC/view/employee/listEmployees.php">Putanja na MVC dio</a>
+            <a href="javascript:void(0);" class="icon" onclick="navBarResponzive()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </header>
+
+    <main>
+            <div class="main_frame">
+              <div class="search_form">
+                <p>Pretrazite zaposlenike po imenu ili prezimenu</p>
+                <form id="form" onsubmit="return false">
+                  <label for="name">Ime</label>
+                  <input type="text" id="name" name="name" placeholder="Ime..">
+
+
+                  <label for="lastname">Prezime</label>
+                  <input type="text" id="lastname" name="lastname" placeholder="Prezime..">
+
+                  <button id="pretrazi">Pretrazi</button>
+                </form>
+              </div>
+       <div class="frame1">
+
+       </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <h2></h2>
+    </footer>
+
+    <script src="../javascrip.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#pretrazi").click(function(){
+
+              if($("#name").val()=="" || $("#lastname").val()==""){
+                alert("Unesite vrijednosti u polja");
+
+              }else {
+                $.ajax({
+                    url: 'employees.php',
+                    type: 'POST',
+                    data: $('#form').serialize(),
+                    async: true,
+                    success: callbackFunction,
+                    error: errorFunction
+                    });
+                }
+              });
+
+            function callbackFunction(data,info) {
+              //console.log(data);
+                $(".frame1").html(data);
+            }
+            function errorFunction(data,info) {
+              alert("error occurred:"+info);
+            }
+
+        });
+    </script>
+    </body>
+</html>

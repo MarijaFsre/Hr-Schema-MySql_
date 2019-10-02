@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!--definitions - izvorni element svakog WSDL dokumenta je element definitions unutar kojeg se navodi naziv web servisa i imenski prostori.-->
+<definitions name="HelloWorld" targetNamespace="urn:HelloWorld" xmlns:tns="urn:HelloWorld"  xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+<!--types - element definira sve tipove podataka potrebne za slanje i primanje poruka.-->
+    <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:Hello">
+      <xsd:element name="getEmployeeID" type="xsd:string" />
+
+    <xsd:complexType name='return'>
+      <xsd:complexContent>
+      <xsd:restriction base='soapenc:Array'>
+        <xsd:attribute wsdl:arrayType='Employee[]' ref='soapenc:arrayType' />
+      </xsd:restriction>
+    </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name='Employee'>
+      <xsd:all>
+        <xsd:element
+          name='employee_id'
+          type='xsd:int'/>
+        <xsd:element
+          name='first_name'
+          type='xsd:string'/>
+        <xsd:element
+          name='last_name'
+          type='xsd:string'/>
+          <xsd:element
+            name='hire_date'
+            type='xsd:string'/>
+          <xsd:element
+            name='department_name'
+            type='xsd:string'/>
+          <xsd:element
+            name='min_salary'
+            type='xsd:int'/>
+            <xsd:element
+              name='max_salary'
+              type='xsd:int'/>
+              <xsd:element
+                name='zaposlenje'
+                type='xsd:string'/>
+      </xsd:all>
+    </xsd:complexType>
+	</xsd:schema>
+  </types>
+<!--message - element se može pojaviti više puta u WSDL dokumentu. Sastoji se od jednog ili više part elemenata. Part elementi referenciraju tipove definirane unutar types elementa. Oni opisuju sadržaj poruke.-->
+  <message name="getEmployes">
+    <part name="yourEmployeeId" type="tns:getEmployeeID" />
+  </message>
+
+  <message name="getEmployesResponse">
+    <part name="return" type="tns:return" />
+  </message>
+<!--portType - predstavlja skup operacija. Sadrži elemente operacije. portType može npr. udružiti jednu request i jednu response poruku u jednu request/response peraciju.-->
+  <portType name="HelloPort">
+    <operation name="getEmployes">
+	  <input message="tns:getEmployes" />
+	  <output message="tns:getEmployesResponse" />
+	</operation>
+  </portType>
+<!--binding - svi elementi prije binding elementa predstavljaju apstraktni opis web servisa. S bindingom počinje opis konkretne implementacije. Binding definira način prijenosa poruka, tj. protokol koji će se pritom
+koristiti.-->
+  <binding name="HelloBinding" type="tns:HelloPort">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+	  <operation name="getEmployes">
+	    <soap:operation soapAction="urn:HelloAction" />
+		<input>
+		  <soap:body use="encoded" namespace="urn:Hello" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+		</input>
+		<output>
+		  <soap:body use="encoded" namespace="urn:Hello" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+		</output>
+	  </operation>
+  </binding>
+<!--service - element sadrži atribut name, koji predstavlja naziv web servisa i element port. Port element sadrži binding atribut i unutar njega se navodi adresa web servisa.-->
+  <service name="HelloService">
+    <port name="HelloPort" binding="tns:HelloBinding">
+	  <soap:address location="http://localhost/Irena_Tomic/jquery_wsdl/wsdl/server.php" />
+	</port>
+  </service>
+
+</definitions>

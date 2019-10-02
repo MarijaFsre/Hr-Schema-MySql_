@@ -1,0 +1,55 @@
+<!--Klijentski dio koji iz forme uzima podatke i salje na client.php -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <div class="header">
+      <h1>Hr-schema-mysql database</h1>
+    </div>
+
+    <header>
+        <div class="topnav" id="myTopnav">
+            <a href="../jquery/index.html" class="active">jQuery Employees</a>
+            <a href="./employees.html">Wsdl Employees</a>
+            <a href="../../MVC/view/employee/listEmployees.php">Putanja na MVC dio</a>
+            <a href="javascript:void(0);" class="icon" onclick="navBarResponzive()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </header>
+
+    <main>
+
+            <div class="main_frame">
+
+              <div class="search_form">
+                <p></p>
+                <form action="./client.php" method="post">
+                  <label for="employees_id">Sifra zaposlenika</label>
+                  <input type="text" id="employees_id" name="employees_id" placeholder="Sifra zaposlenika..">
+
+
+
+                  <button type="submit">Pretrazi</button>
+                </form>
+              </div>
+       <div class="frame1">
+
+       </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <h2>Footer</h2>
+    </footer>
+
+    <script src="../javascrip.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </body>
+</html>
